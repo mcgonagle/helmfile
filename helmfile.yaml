@@ -11,7 +11,7 @@ repositories:
 
 releases:
   - name: cert-manager
-    kubeContext: mechonis
+    kubeContext: docker-desktop
     chart: jetstack/cert-manager
     createNamespace: true
     namespace: cert-manager
@@ -22,9 +22,10 @@ releases:
       - name: prometheus.enabled
         value: "false"
   - name: csi-s3
-    kubeContext: mechonis
+    kubeContext: docker-desktop
     chart: csi-s3/csi-s3
     namespace: kube-system
+    version: 0.42.1
     set:
       - name: "storageClass.name"
         value: "tigris"
@@ -38,10 +39,10 @@ releases:
         value: "auto"
   - name: ingress-nginx
     chart: ingress-nginx/ingress-nginx
-    kubeContext: mechonis
+    kubeContext: docker-desktop
     namespace: ingress-nginx
     createNamespace: true
-  - name: metrics-server
-    kubeContext: mechonis
-    chart: metrics-server/metrics-server
-    namespace: kube-system
+#  - name: metrics-server
+#   kubeContext: mechonis
+#    chart: metrics-server/metrics-server
+#    namespace: kube-system
