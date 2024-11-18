@@ -1,0 +1,47 @@
+repositories:
+  - name: jetstack
+    url: https://charts.jetstack.io
+  - name: csi-s3
+    url: cr.yandex/yc-marketplace/yandex-cloud/csi-s3
+    oci: true
+  - name: ingress-nginx
+    url: https://kubernetes.github.io/ingress-nginx
+  - name: metrics-server
+    url: https://kubernetes-sigs.github.io/metrics-server/
+
+releases:
+  - name: cert-manager
+    kubeContext: mechonis
+    chart: jetstack/cert-manager
+    createNamespace: true
+    namespace: cert-manager
+    version: v1.16.1
+    set:
+      - name: installCRDs
+        value: "true"
+      - name: prometheus.enabled
+        value: "false"
+  - name: csi-s3
+    kubeContext: mechonis
+    chart: csi-s3/csi-s3
+    namespace: kube-system
+    set:
+      - name: "storageClass.name"
+        value: "tigris"
+      - name: "secret.accessKey"
+        value: ""
+      - name: "secret.secretKey"
+        value: ""
+      - name: "secret.endpoint"
+        value: "https://fly.storage.tigris.dev"
+      - name: "secret.region"
+        value: "auto"
+  - name: ingress-nginx
+    chart: ingress-nginx/ingress-nginx
+    kubeContext: mechonis
+    namespace: ingress-nginx
+    createNamespace: true
+  - name: metrics-server
+    kubeContext: mechonis
+    chart: metrics-server/metrics-server
+    namespace: kube-system
